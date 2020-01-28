@@ -1,0 +1,155 @@
+<html>
+<head>
+
+<style>
+
+#main
+{
+background-color: blue;
+height: 600px;
+width: 600px;
+position: relative;
+}
+
+#snake
+{
+background-color: green;
+height: 30px;
+width: 30px;
+z-index: 100;
+position: absolute;
+}
+
+#food
+{
+background-color: red;
+height: 30px;
+width: 30px;
+position: absolute;
+}
+
+#score
+{
+background-color: #eee;
+height: 30px;
+width: 600px;
+text-align: center;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div id="main">
+<div id="snake">
+</div>
+<div id="food"></div>
+</div>
+
+<div id="score">
+score
+</div>
+
+<script>
+var vx=30;
+var vy=0;
+
+var sx=0;
+var sy=0;
+
+var fx=0;
+var fy=0;
+
+var score=0;
+
+document.onkeydown=divDir;
+
+function divDir(e)
+{
+if(e.keyCode==37)
+{
+vx=-30;
+vy=0;
+}
+if(e.keyCode==38)
+{
+vx=0;
+vy=-30;
+}
+if(e.keyCode==39)
+{
+vx=30;
+vy=0;
+}
+if(e.keyCode==40)
+{
+vx=0;
+vy=30;
+}
+}
+
+function move()
+{
+sx=sx+vx;
+sy=sy+vy;
+if(sx==fx && sy==fy)
+{
+score++;
+drawFood();
+updateScore();
+} 
+if(sx>570)
+{
+sx=0;
+score=0;
+updateScore();
+}
+if(sx<0)
+{
+sx=570;
+score=0;
+updateScore();
+}
+if(sy>570)
+{
+sy=0;
+score=0;
+updateScore();
+}
+if(sy<0)
+{
+sy=570;
+score=0;
+updateScore();
+}
+document.getElementById("snake").style.left=sx+'px';
+document.getElementById("snake").style.top=sy+'px';
+}
+
+function updateScore()
+{
+document.getElementById("score").innerHTML=score;
+}
+
+function drawFood()
+{
+fx=Math.floor(Math.random()*19)*30;
+fy=Math.floor(Math.random()*19)*30;
+document.getElementById("food").style.left=fx+'px';
+document.getElementById("food").style.top=fy+'px';
+}
+
+function start()
+{
+setInterval(move,300);
+drawFood();
+}
+
+start();
+</script>
+
+</body>
+
+</html>
